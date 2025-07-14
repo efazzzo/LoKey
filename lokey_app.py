@@ -1,41 +1,38 @@
 import streamlit as st
 import pandas as pd
 
-# Sample data: mock list of venues with mood tags and whether they show games
-venue_data = [
-    {"name": "Slate Charlotte", "mood": "Hype", "game_on": True, "description": "Trendy rooftop bar with sports screens."},
-    {"name": "Prohibition", "mood": "Chill", "game_on": False, "description": "Relaxed pub with live music on weekends."},
-    {"name": "Queen Park Social", "mood": "Social", "game_on": True, "description": "Games, drinks, and UFC nights."},
-    {"name": "The Degenerate", "mood": "Creative", "game_on": False, "description": "Graffiti art, DJs, and cocktails."},
-    {"name": "Hoppin’", "mood": "Hype", "game_on": True, "description": "Lively beer wall with game day specials."},
-    {"name": "The Wine Loft", "mood": "Chill", "game_on": False, "description": "Lowkey wine bar perfect for a date night."}
-]
+st.title("LoKey Bar Portal")
+st.subheader("Submit Your Venue for LoKey City!")
 
-# Convert to DataFrame for filtering
-df = pd.DataFrame(venue_data)
+# Form input for bar owners
+with st.form("venue_form"):
+    name = st.text_input("Venue Name")
+    description = st.text_area("Short Description (What’s the vibe?)")
+    mood = st.selectbox("Primary Vibe Category", ["Chill", "Hype", "Creative", "Social"])
+    game_on = st.checkbox("Will you be showing a major game/fight tonight?")
+    submitted = st.form_submit_button("Submit Venue")
 
-# Streamlit UI
-st.title("LoKey City: Discover the Vibe")
-st.subheader("What kind of mood are you in?")
+# Save to local list (simulated for now)
+if "venue_submissions" not in st.session_state:
+    st.session_state.venue_submissions = []
 
-# Mood filter buttons
-moods = df['mood'].unique().tolist()
-selected_mood = st.radio("Choose your vibe:", moods)
+if submitted:
+    new_venue = {
+        "name": name,
+        "description": description,
+        "mood": mood,
+        "game_on": game_on
+    }
+    st.session_state.venue_submissions.append(new_venue)
+    st.success(f"✅ {name} has been submitted to LoKey City!")
 
-# "Game On" toggle
-game_filter = st.checkbox("Only show places with the game on 🎮")
+# Display submissions (for testing/demo)
+if st.session_state.venue_submissions:
+    st.subheader("Current Submissions:")
+    for v in st.session_state.venue_submissions:
+        st.markdown(f"### {v['name']}")
+        st.write(v["description"])
+        st.write(f"Vibe: {v['mood']}")
+        st.write("🎯 Game On Tonight!" if v["game_on"] else "❌ No game tonight")
+        st.markdown("---")
 
-# Filter based on selections
-filtered_df = df[df['mood'] == selected_mood]
-if game_filter:
-    filtered_df = filtered_df[filtered_df['game_on'] == True]
-
-# Display results
-st.subheader(f"LoKey Picks for a {selected_mood} night:")
-for _, row in filtered_df.iterrows():
-    st.markdown(f"### {row['name']}")
-    st.write(row['description'])
-    if row['game_on']:
-        st.success("🎯 Showing the game tonight!")
-    else:
-        st.info("This spot is vibe-only tonight.")
