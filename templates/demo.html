@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoKey Demo - User Journey</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .demo-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .demo-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .demo-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+
+        .journey-step {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 2px dashed var(--border);
+        }
+
+        .journey-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-content {
+            margin-left: 0;
+        }
+
+        .scenario-box {
+            background: #f0f9ff;
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+        }
+
+        .scenario-label {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scenario-text {
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .result-preview {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .mini-place-card {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .mini-place-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .mini-place-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .mini-place-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-vibes-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .vibe-pill {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .arrow-down {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .try-it-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .try-it-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="logo">LoKey Demo</a>
+            <p class="tagline">See how vibe-based discovery works</p>
+        </div>
+    </div>
+
+    <div class="demo-container">
+        <div class="demo-section">
+            <h1 class="demo-title">How LoKey Works: User Journey</h1>
+            <p class="demo-description">
+                Traditional platforms ask "what are you looking for?" (Mexican, coffee, bars).
+                LoKey asks <span class="highlight">"what's your vibe?"</span> — then shows you places that match the energy you're seeking.
+            </p>
+        </div>
+
+        <!-- Scenario 1 -->
+        <div class="demo-section journey-step">
+            <div class="step-number">1</div>
+            <h2 class="step-title">User Selects Their Vibe</h2>
+
+            <div class="scenario-box">
+                <div class="scenario-label">Example Scenario</div>
+                <p class="scenario-text">
+                    "It's Friday night. I want somewhere social and fun, maybe with some energy,
+                    but not too serious. Group of friends, looking for good vibes."
+                </p>
+            </div>
+
+            <div class="step-content">
+                <p>Instead of searching "bars near me", the user filters by vibes:</p>
+
+                <div class="selected-vibes-display">
+                    <span class="vibe-pill">Social Buzz</span>
+                    <span class="vibe-pill">High Energy</span>
+                    <span class="vibe-pill">Group Spot</span>
+                </div>
+
+                <p class="text-muted mt-2">
+                    The interface lets them tap mood tags like buttons — quick, intuitive, mobile-friendly.
+                </p>
+            </div>
+        </div>
+
+        <!-- Scenario 2 -->
+        <div class="demo-section journey-step">
+            <div class="step-number">2</div>
+            <h2 class="step-title">LoKey Shows Matching Places</h2>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="step-content">
+                <div class="result-preview">
+                    <div class="result-label">3 places match your vibe:</div>
+
+                    <div class="mini-place-card">
+                        <div class="mini-place-name">Throwbacks Arcade Bar</div>
+                        <div class="mini-place-desc">
+                            Pure nostalgia with a grown-up twist. Blinking screens, 8-bit soundtracks,
+                            quarters in hand. The kind of place that makes you feel like a kid with better taste in drinks.
+                        </div>
+                        <div class="place-vibes">
+                            <span class="place-vibe-tag">High Energy</span>
+                            <span class="place-vibe-tag">Social Buzz</span>
+                            <span class="place-vibe-tag">Group Spot</span>
+                        </div>
+                    </div>
+
+                    <div class="mini-place-card">
+                        <div class="mini-place-name">Far Gohn Brewing Company</div>
+                        <div class="mini-place-desc">
+                            Industrial-cool meets neighborhood hangout. Concrete floors, long communal tables,
+                            the sound of laughter mixing with craft beer talk.
+                        </div>
+                        <div class="place-vibes">
+                            <span class="place-vibe-tag">Social Buzz</span>
+                            <span class="place-vibe-tag">Group Spot</span>
+                            <span class="place-vibe-tag">Craft Drinks</span>
+                        </div>
+                    </div>
+
+                    <div class="mini-place-card">
+                        <div class="mini-place-name">Zandra's</div>
+                        <div class="mini-place-desc">
+                            Colorful, lively, unpretentious. Booths that have seen countless margarita nights,
+                            that perfect balance of family-friendly by day and social by night.
+                        </div>
+                        <div class="place-vibes">
+                            <span class="place-vibe-tag">Social Buzz</span>
+                            <span class="place-vibe-tag">Group Spot</span>
+                            <span class="place-vibe-tag">Chill Hangout</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-2">
+                    Notice: No stars, no reviews, no "4.2/5" — just honest descriptions of what each place
+                    <strong>feels like</strong> and <strong>who it's for</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Scenario 3 -->
+        <div class="demo-section journey-step">
+            <div class="step-number">3</div>
+            <h2 class="step-title">User Explores Place Details</h2>
+
+            <div class="step-content">
+                <p>Tap any place to see the full context:</p>
+
+                <div class="context-section mt-2">
+                    <div class="context-label">What it feels like</div>
+                    <p class="context-text">
+                        "Pure nostalgia with a grown-up twist. Blinking screens, 8-bit soundtracks,
+                        quarters (or tokens) in hand. The kind of place that makes you feel like a kid
+                        with better taste in drinks."
+                    </p>
+                </div>
+
+                <div class="context-section">
+                    <div class="context-label">Who it's for</div>
+                    <p class="context-text">
+                        "Gamers, groups looking for something different, date nights with a playful edge,
+                        anyone who grew up on Pac-Man and Mario"
+                    </p>
+                </div>
+
+                <div class="context-section">
+                    <div class="context-label">When it shines</div>
+                    <p class="context-text">
+                        "Weekend nights, date nights, when you want fun over fancy,
+                        when conversation needs a game break"
+                    </p>
+                </div>
+
+                <p class="text-muted mt-2">
+                    This is what Google can't tell you. This is what makes the difference
+                    between finding <em>a place</em> and finding <em>the right place</em>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Different Scenario -->
+        <div class="demo-section journey-step">
+            <div class="step-number">4</div>
+            <h2 class="step-title">Different Vibe, Different Results</h2>
+
+            <div class="scenario-box">
+                <div class="scenario-label">Different Scenario</div>
+                <p class="scenario-text">
+                    "Saturday morning. Need coffee and a quiet corner to work on my laptop.
+                    Solo, need focus, want good caffeine."
+                </p>
+            </div>
+
+            <div class="step-content">
+                <p>User selects:</p>
+
+                <div class="selected-vibes-display">
+                    <span class="vibe-pill">Quiet Focus</span>
+                    <span class="vibe-pill">Coffee Culture</span>
+                    <span class="vibe-pill">Solo Friendly</span>
+                </div>
+
+                <div class="arrow-down">↓</div>
+
+                <div class="result-preview">
+                    <div class="result-label">Top match:</div>
+
+                    <div class="mini-place-card">
+                        <div class="mini-place-name">Piedmont Coffee House</div>
+                        <div class="mini-place-desc">
+                            The living room Culpeper needed. Smells like fresh roasted beans,
+                            sounds like friendly chatter and laptop keyboards. Baristas who remember your order.
+                        </div>
+                        <div class="place-vibes">
+                            <span class="place-vibe-tag">Quiet Focus</span>
+                            <span class="place-vibe-tag">Coffee Culture</span>
+                            <span class="place-vibe-tag">Solo Friendly</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-2">
+                    Same town, completely different vibe. LoKey adapts to what you need <em>right now</em>,
+                    not just what category you pick.
+                </p>
+            </div>
+        </div>
+
+        <!-- Try It -->
+        <div class="demo-section" style="text-align: center;">
+            <h2 class="step-title">Ready to Try It?</h2>
+            <p class="text-muted mb-2">
+                Experience vibe-based discovery for yourself. All 10 Culpeper places are loaded and ready.
+            </p>
+            <a href="/" class="try-it-btn">Start Discovering</a>
+            <div class="mt-2">
+                <a href="/admin" class="text-muted" style="font-size: 0.875rem;">
+                    Or visit the admin panel to add your own places
+                </a>
+            </div>
+        </div>
+
+        <!-- Why It Matters -->
+        <div class="demo-section">
+            <h2 class="demo-title">Why This Matters</h2>
+            <div style="line-height: 1.8;">
+                <p><strong>Google/Yelp tells you:</strong> "Mexican restaurants, 4.3 stars"</p>
+                <p><strong>LoKey tells you:</strong> "Social buzz, game day energy, groups welcome — here's what it actually feels like inside"</p>
+
+                <p class="mt-3">
+                    Traditional platforms optimize for <span class="highlight">scale</span>.
+                    LoKey optimizes for <span class="highlight">truth</span>.
+                </p>
+
+                <p class="mt-2 text-muted">
+                    No algorithms pushing sponsored content. No fake reviews. No star ratings that mean nothing.
+                    Just honest, contextual descriptions that help you find what you're actually looking for.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
