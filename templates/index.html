@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Find places in Culpeper worth knowing about. Filter by vibe, not stars.">
+    <title>LoKey - Culpeper</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="logo">LoKey</a>
+            <p class="tagline">Culpeper, worth knowing</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Vibe Filters -->
+        <div id="vibe-filters" class="mb-3">
+            <div class="loading">Loading vibes...</div>
+        </div>
+
+        <!-- Results Count -->
+        <div id="results-info" style="display: none;">
+            <p class="text-muted mb-2" id="results-count"></p>
+        </div>
+
+        <!-- Places Grid -->
+        <div id="places-grid" class="places-grid">
+            <div class="loading">Finding your vibe...</div>
+        </div>
+    </div>
+
+    <script src="/static/js/discover.js"></script>
+</body>
+</html>

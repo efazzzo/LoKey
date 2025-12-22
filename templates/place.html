@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Discover local places in Culpeper worth knowing about">
+    <title id="page-title">Place - LoKey</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="logo">LoKey</a>
+            <p class="tagline">Culpeper, worth knowing</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="place-content">
+            <div class="loading">Loading place details...</div>
+        </div>
+    </div>
+
+    <script>
+        const placeId = window.location.pathname.split('/').pop();
+
+        async function loadPlace() {
+            try {
+                const response = await fetch(`/api/place/${placeId}`);
+                if (!response.ok) {
+                    throw new Error('Place not found');
+                }
+                const place = await response.json();
+                renderPlace(place);
+            } catch (error) {
+                console.error('Error loading place:', error);
+                document.getElementById('place-content').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">😕</div>
+                        <p>Place not found</p>
+                        <a href="/" class="btn btn-primary mt-2">Back to Discovery</a>
+                    </div>
+                `;
+            }
+        }
+
+        function renderPlace(place) {
+            document.getElementById('page-title').textContent = `${place.name} - LoKey`;
+
+            const vibesHTML = place.vibes.map(vibe =>
+                `<span class="place-vibe-tag">${formatVibeName(vibe.name)}</span>`
+            ).join('');
+
+            let infoHTML = '';
+            if (place.address || place.phone || place.website || place.instagram) {
+                infoHTML = '<div class="place-info">';
+                if (place.address) {
+                    infoHTML += `
+                        <div class="info-item">
+                            <span class="info-label">Address</span>
+                            <span class="info-value">
+                                <a href="https://maps.google.com/?q=${encodeURIComponent(place.address)}" target="_blank">
+                                    ${place.address}
+                                </a>
+                            </span>
+                        </div>
+                    `;
+                }
+                if (place.phone) {
+                    infoHTML += `
+                        <div class="info-item">
+                            <span class="info-label">Phone</span>
+                            <span class="info-value"><a href="tel:${place.phone}">${place.phone}</a></span>
+                        </div>
+                    `;
+                }
+                if (place.website) {
+                    infoHTML += `
+                        <div class="info-item">
+                            <span class="info-label">Website</span>
+                            <span class="info-value"><a href="${place.website}" target="_blank">Visit site</a></span>
+                        </div>
+                    `;
+                }
+                if (place.instagram) {
+                    infoHTML += `
+                        <div class="info-item">
+                            <span class="info-label">Instagram</span>
+                            <span class="info-value"><a href="https://instagram.com/${place.instagram.replace('@', '')}" target="_blank">@${place.instagram.replace('@', '')}</a></span>
+                        </div>
+                    `;
+                }
+                infoHTML += '</div>';
+            }
+
+            const shareUrl = window.location.href;
+            const shareText = `Check out ${place.name} on LoKey`;
+
+            document.getElementById('place-content').innerHTML = `
+                <div class="place-detail">
+                    <h1 class="place-name">${place.name}</h1>
+
+                    ${place.description ? `<p class="text-muted mb-3">${place.description}</p>` : ''}
+
+                    <div class="place-vibes mb-3">${vibesHTML}</div>
+
+                    ${place.what_it_feels_like ? `
+                        <div class="context-section">
+                            <div class="context-label">What it feels like</div>
+                            <p class="context-text">${place.what_it_feels_like}</p>
+                        </div>
+                    ` : ''}
+
+                    ${place.who_its_for ? `
+                        <div class="context-section">
+                            <div class="context-label">Who it's for</div>
+                            <p class="context-text">${place.who_its_for}</p>
+                        </div>
+                    ` : ''}
+
+                    ${place.when_it_shines ? `
+                        <div class="context-section">
+                            <div class="context-label">When it shines</div>
+                            <p class="context-text">${place.when_it_shines}</p>
+                        </div>
+                    ` : ''}
+
+                    ${infoHTML}
+
+                    <div class="share-buttons">
+                        <button class="btn btn-secondary" onclick="sharePlace()">Share</button>
+                        <a href="/api/qr/${place.id}" class="btn btn-secondary" target="_blank">QR Code</a>
+                    </div>
+
+                    <a href="/" class="btn btn-primary btn-block mt-3">Back to Discovery</a>
+                </div>
+            `;
+        }
+
+        function formatVibeName(name) {
+            return name.split('-').map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        async function sharePlace() {
+            const shareData = {
+                title: document.getElementById('page-title').textContent,
+                text: `Check out this place on LoKey`,
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    // Fallback: copy to clipboard
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                }
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        }
+
+        // Load place on page load
+        document.addEventListener('DOMContentLoaded', loadPlace);
+    </script>
+</body>
+</html>

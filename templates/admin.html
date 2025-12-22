@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - LoKey</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .admin-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin-bottom: -2px;
+        }
+
+        .admin-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+        }
+
+        .checkbox-label:hover {
+            background: var(--bg-secondary);
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="logo">LoKey Admin</a>
+            <p class="tagline">Manage your places</p>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showTab('add')">Add Place</button>
+            <button class="admin-tab" onclick="showTab('seed')">Seed Data</button>
+        </div>
+
+        <!-- Add Place Tab -->
+        <div id="add-tab" class="tab-content active">
+            <div id="success-msg" class="success-message"></div>
+            <div id="error-msg" class="error-message"></div>
+
+            <form id="add-place-form">
+                <div class="form-section">
+                    <h2>Basic Info</h2>
+
+                    <div class="form-group">
+                        <label for="name">Place Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Short Description</label>
+                        <textarea id="description" name="description" placeholder="One-line description of the place"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>The LoKey Context</h2>
+                    <p class="text-muted mb-2">This is what makes LoKey different - rich, contextual descriptions</p>
+
+                    <div class="form-group">
+                        <label for="what_it_feels_like">What it feels like *</label>
+                        <textarea id="what_it_feels_like" name="what_it_feels_like" required
+                            placeholder="The atmosphere, energy, sensory experience. Paint the picture."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="who_its_for">Who it's for *</label>
+                        <textarea id="who_its_for" name="who_its_for" required
+                            placeholder="The people who will love this place. Be specific."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="when_it_shines">When it shines *</label>
+                        <textarea id="when_it_shines" name="when_it_shines" required
+                            placeholder="Times, occasions, moments when this place is at its best."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Vibe Tags</h2>
+                    <p class="text-muted mb-2">Select all vibes that apply</p>
+                    <div id="vibe-checkboxes" class="checkbox-group">
+                        <div class="loading">Loading vibes...</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Contact Info</h2>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address" placeholder="123 Main St, Culpeper, VA 22701">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" placeholder="(540) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" name="website" placeholder="https://example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instagram">Instagram</label>
+                        <input type="text" id="instagram" name="instagram" placeholder="@placename">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Add Place</button>
+            </form>
+        </div>
+
+        <!-- Seed Data Tab -->
+        <div id="seed-tab" class="tab-content">
+            <div id="seed-success-msg" class="success-message"></div>
+            <div id="seed-error-msg" class="error-message"></div>
+
+            <div class="form-section">
+                <h2>Seed Sample Data</h2>
+                <p class="text-muted mb-2">
+                    Load sample Culpeper venues into the database. This will add 8 curated places
+                    with full vibe tags and contextual descriptions.
+                </p>
+                <p class="text-muted mb-2">
+                    This is safe to run multiple times - it will only add new places.
+                </p>
+                <button onclick="seedData()" class="btn btn-primary">Load Sample Places</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allVibes = {};
+
+        // Load vibes on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadVibes();
+        });
+
+        // Tab switching
+        function showTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // Load vibe tags
+        async function loadVibes() {
+            try {
+                const response = await fetch('/api/vibes');
+                allVibes = await response.json();
+                renderVibeCheckboxes();
+            } catch (error) {
+                console.error('Error loading vibes:', error);
+            }
+        }
+
+        // Render vibe checkboxes
+        function renderVibeCheckboxes() {
+            const container = document.getElementById('vibe-checkboxes');
+            container.innerHTML = '';
+
+            const categoryOrder = ['mood', 'activity', 'time', 'crowd'];
+            const categoryLabels = {
+                'mood': 'Mood Vibes',
+                'activity': 'Activity Vibes',
+                'time': 'Time Vibes',
+                'crowd': 'Crowd Vibes'
+            };
+
+            categoryOrder.forEach(category => {
+                if (!allVibes[category]) return;
+
+                const categoryTitle = document.createElement('div');
+                categoryTitle.style.gridColumn = '1 / -1';
+                categoryTitle.className = 'vibe-category-title mt-2';
+                categoryTitle.textContent = categoryLabels[category];
+                container.appendChild(categoryTitle);
+
+                allVibes[category].forEach(vibe => {
+                    const label = document.createElement('label');
+                    label.className = 'checkbox-label';
+                    label.title = vibe.description;
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'vibes';
+                    checkbox.value = vibe.name;
+
+                    const text = document.createTextNode(formatVibeName(vibe.name));
+
+                    label.appendChild(checkbox);
+                    label.appendChild(text);
+                    container.appendChild(label);
+                });
+            });
+        }
+
+        // Format vibe name
+        function formatVibeName(name) {
+            return name.split('-').map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        // Handle form submission
+        document.getElementById('add-place-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                description: formData.get('description'),
+                what_it_feels_like: formData.get('what_it_feels_like'),
+                who_its_for: formData.get('who_its_for'),
+                when_it_shines: formData.get('when_it_shines'),
+                address: formData.get('address'),
+                phone: formData.get('phone'),
+                website: formData.get('website'),
+                instagram: formData.get('instagram'),
+                vibes: formData.getAll('vibes')
+            };
+
+            try {
+                const response = await fetch('/api/admin/place', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showSuccess('Place added successfully!');
+                    e.target.reset();
+                } else {
+                    showError('Error adding place. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Error adding place. Please try again.');
+            }
+        });
+
+        // Seed data
+        async function seedData() {
+            try {
+                const response = await fetch('/api/admin/seed', { method: 'POST' });
+                const result = await response.json();
+
+                if (response.ok) {
+                    showSeedSuccess(result.message);
+                } else {
+                    showSeedError('Error seeding data. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showSeedError('Error seeding data. Please try again.');
+            }
+        }
+
+        // Show messages
+        function showSuccess(message) {
+            const el = document.getElementById('success-msg');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function showError(message) {
+            const el = document.getElementById('error-msg');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function showSeedSuccess(message) {
+            const el = document.getElementById('seed-success-msg');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function showSeedError(message) {
+            const el = document.getElementById('seed-error-msg');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>
