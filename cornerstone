@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cornerstone — Your Farm Has a Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2B4B;--navy-deep:#111D33;--gold:#C9A84C;--gold-light:#E8C96A;
+  --cream:#FAF7F2;--white:#FFFFFF;--gray:#888888;--light:#F4F1EC;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:'Source Sans 3',sans-serif;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;font-size:13px;padding:16px 36px;border:none;cursor:pointer;transition:all .3s ease}
+.btn-gold{background:var(--gold);color:var(--navy-deep)}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 32px rgba(201,168,76,.25)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.3)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-deep);transform:translateY(-2px)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* LANDING */
+#screen-landing{min-height:100vh;position:relative;display:flex;flex-direction:column;background:var(–navy-deep);overflow:hidden}
+.land-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 85%,rgba(201,168,76,.07) 0%,transparent 55%),radial-gradient(ellipse at 80% 15%,rgba(74,103,65,.1) 0%,transparent 50%),linear-gradient(165deg,#0D1A2E 0%,#1B2B4B 45%,#0F1F38 100%)}
+.grain{position:absolute;inset:0;opacity:.03;pointer-events:none;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=’.85’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);background-size:180px}
+.field-lines{position:absolute;bottom:0;left:0;right:0;height:40%;overflow:hidden;opacity:.1}
+.field-lines svg{width:100%;height:100%}
+.land-nav{position:relative;z-index:10;padding:28px 48px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:‘Playfair Display’,serif;font-size:20px;font-weight:700;color:var(–white);letter-spacing:4px;text-transform:uppercase}
+.logo span{color:var(–gold)}
+.land-body{position:relative;z-index:10;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px 120px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(–gold);margin-bottom:20px;opacity:0;animation:fadeUp .8s ease .2s forwards}
+.land-h1{font-family:‘Playfair Display’,serif;font-size:clamp(40px,7vw,86px);font-weight:400;color:var(–white);line-height:1.08;margin-bottom:10px;opacity:0;animation:fadeUp .9s ease .4s forwards}
+.land-h1 em{color:var(–gold);font-style:italic}
+.land-sub{font-size:clamp(15px,2vw,19px);font-weight:300;color:rgba(255,255,255,.6);max-width:500px;line-height:1.75;margin-bottom:52px;opacity:0;animation:fadeUp .9s ease .6s forwards}
+.land-cta{opacity:0;animation:fadeUp .9s ease .8s forwards}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.25);font-size:10px;letter-spacing:4px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:10;opacity:0;animation:fadeIn 1s ease 1.6s forwards}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,rgba(201,168,76,.5),transparent);animation:pulse 2s ease infinite}
+
+/* STEPS */
+.steps{display:flex;gap:6px;margin-bottom:40px}
+.step{width:32px;height:3px;background:rgba(27,43,75,.12);transition:background .3s}
+.step.active{background:var(–gold)}
+.step.done{background:var(–navy)}
+
+/* TRUST */
+#screen-trust{min-height:100vh;background:var(–navy-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;position:relative}
+.trust-wrap{position:relative;z-index:2;max-width:600px;animation:fadeUp .7s ease forwards}
+.trust-icon{width:64px;height:64px;border-radius:50%;border:1px solid rgba(201,168,76,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:26px}
+.trust-h{font-family:‘Playfair Display’,serif;font-size:clamp(26px,4vw,40px);color:var(–white);margin-bottom:36px;line-height:1.2}
+.trust-list{display:flex;flex-direction:column;gap:14px;margin-bottom:44px;text-align:left}
+.trust-item{display:flex;gap:14px;align-items:flex-start;padding:18px 22px;border:1px solid rgba(201,168,76,.12);background:rgba(255,255,255,.03)}
+.trust-check{color:var(–gold);font-size:16px;margin-top:2px;flex-shrink:0}
+.trust-text{font-size:15px;color:rgba(255,255,255,.75);line-height:1.65;font-weight:300}
+.trust-text strong{color:var(–white);font-weight:600}
+
+/* INTAKE */
+.intake-wrap{max-width:540px;width:100%;animation:fadeUp .7s ease forwards}
+.intake-q{font-family:‘Playfair Display’,serif;font-size:clamp(22px,3.5vw,34px);color:var(–navy);margin-bottom:6px;line-height:1.3}
+.intake-hint{font-size:14px;color:var(–gray);margin-bottom:32px;font-weight:300}
+.field-input{width:100%;padding:16px 18px;font-family:‘Source Sans 3’,sans-serif;font-size:17px;color:var(–navy);background:var(–white);border:1px solid rgba(27,43,75,.12);border-bottom:2px solid rgba(27,43,75,.25);outline:none;transition:border-color .3s;margin-bottom:28px}
+.field-input:focus{border-bottom-color:var(–gold)}
+.field-input::placeholder{color:rgba(27,43,75,.3);font-weight:300}
+.path-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.path-opt{padding:18px 22px;border:1px solid rgba(27,43,75,.1);background:var(–white);cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .25s;text-align:left}
+.path-opt:hover{border-color:var(–gold);background:rgba(201,168,76,.04)}
+.path-opt.sel{border-color:var(–navy);background:var(–navy)}
+.path-opt.sel .path-title{color:var(–white)}
+.path-opt.sel .path-ico{background:rgba(201,168,76,.2);color:var(–gold)}
+.path-ico{width:42px;height:42px;background:var(–light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .25s}
+.path-title{font-size:15px;font-weight:600;color:var(–navy);line-height:1.4;transition:color .25s}
+
+/* LEGACY */
+#screen-legacy{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:768px){#screen-legacy{grid-template-columns:1fr}.leg-left{display:none!important}}
+.leg-left{background:var(–navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 48px;text-align:center;position:relative;overflow:hidden}
+.leg-left-content{position:relative;z-index:2}
+.leg-left-icon{font-size:52px;margin-bottom:20px}
+.leg-left-h{font-family:‘Playfair Display’,serif;font-size:26px;color:var(–white);line-height:1.3;margin-bottom:14px}
+.leg-left-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.75;font-weight:300}
+.leg-left-q{margin-top:40px;padding:22px;border:1px solid rgba(201,168,76,.18);font-family:‘Playfair Display’,serif;font-style:italic;font-size:14px;color:rgba(255,255,255,.55);line-height:1.7}
+.leg-right{display:flex;flex-direction:column;justify-content:center;padding:60px 48px;animation:fadeUp .7s ease forwards;background:var(–white)}
+.leg-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(–gold);margin-bottom:6px}
+.leg-q{font-family:‘Playfair Display’,serif;font-size:clamp(20px,2.8vw,30px);color:var(–navy);margin-bottom:6px;line-height:1.3}
+.leg-sub{font-size:13px;color:var(–gray);margin-bottom:28px;font-weight:300;line-height:1.6}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.f-group{display:flex;flex-direction:column;gap:5px}
+.f-group.full{grid-column:1/-1}
+.f-lbl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–navy);opacity:.45}
+.f-in{padding:12px 14px;font-family:‘Source Sans 3’,sans-serif;font-size:15px;color:var(–navy);background:var(–cream);border:1px solid rgba(27,43,75,.1);border-bottom:2px solid rgba(27,43,75,.18);outline:none;transition:border-color .3s;width:100%}
+.f-in:focus{border-bottom-color:var(–gold);background:var(–white)}
+.f-in::placeholder{color:rgba(27,43,75,.3);font-weight:300}
+textarea.f-in{resize:vertical;min-height:100px;line-height:1.6}
+
+/* FEED */
+#screen-feed{min-height:100vh;background:var(–cream);display:flex;flex-direction:column}
+.feed-nav{background:var(–navy);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.feed-nav .logo{font-size:16px;letter-spacing:3px}
+.feed-nav-right{display:flex;align-items:center;gap:14px}
+.nav-pill{padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.6);cursor:pointer;background:transparent;transition:all .25s;font-family:‘Source Sans 3’,sans-serif}
+.nav-pill:hover,.nav-pill.active{border-color:var(–gold);color:var(–gold)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(–gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(–navy-deep);cursor:pointer}
+.feed-body{display:grid;grid-template-columns:1fr 300px;flex:1}
+@media(max-width:900px){.feed-body{grid-template-columns:1fr}.feed-sidebar{display:none!important}}
+.feed-main{padding:28px 24px;border-right:1px solid rgba(27,43,75,.08)}
+.feed-welcome{background:var(–navy);padding:22px 24px;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.feed-welcome-text h3{font-family:‘Playfair Display’,serif;font-size:17px;color:var(–white);margin-bottom:3px}
+.feed-welcome-text p{font-size:13px;color:rgba(255,255,255,.5);font-weight:300}
+.feed-welcome-icon{font-size:30px;flex-shrink:0}
+.feed-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid rgba(27,43,75,.1)}
+.feed-tab{padding:11px 18px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(–gray);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;transition:all .25s;font-family:‘Source Sans 3’,sans-serif}
+.feed-tab.active{color:var(–navy);border-bottom-color:var(–gold)}
+.feed-tab:hover{color:var(–navy)}
+.post-card{background:var(–white);border:1px solid rgba(27,43,75,.07);margin-bottom:14px;overflow:hidden;transition:border-color .25s}
+.post-card:hover{border-color:rgba(201,168,76,.35)}
+.post-header{padding:16px 20px 10px;display:flex;align-items:flex-start;gap:12px}
+.farm-badge{width:42px;height:42px;background:var(–navy);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.post-meta{flex:1}
+.farm-name{font-size:14px;font-weight:600;color:var(–navy)}
+.farm-details{font-size:11px;color:var(–gray);font-weight:300;margin-top:2px}
+.post-tag{padding:3px 9px;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(27,43,75,.15);color:var(–gray)}
+.post-body{padding:0 20px 14px}
+.post-title{font-family:‘Playfair Display’,serif;font-size:16px;color:var(–navy);margin-bottom:7px;line-height:1.35}
+.post-text{font-size:13px;color:#444;line-height:1.7;font-weight:300}
+.post-footer{padding:11px 20px;border-top:1px solid rgba(27,43,75,.06);display:flex;align-items:center;gap:14px}
+.post-action{display:flex;align-items:center;gap:5px;font-size:12px;color:var(–gray);cursor:pointer;transition:color .25s;background:none;border:none;padding:4px 0;font-family:‘Source Sans 3’,sans-serif}
+.post-action:hover{color:var(–gold)}
+.post-action.saved{color:var(–gold)}
+.post-action svg{width:13px;height:13px;flex-shrink:0}
+.save-toast{position:fixed;bottom:32px;right:32px;background:var(–navy);color:var(–white);padding:14px 22px;font-size:13px;font-weight:600;letter-spacing:1px;border-left:3px solid var(–gold);opacity:0;transform:translateY(10px);transition:all .3s ease;pointer-events:none;z-index:999}
+.save-toast.show{opacity:1;transform:translateY(0)}
+.feed-sidebar{padding:24px 20px;border-left:1px solid rgba(27,43,75,.08);background:var(–white)}
+.sidebar-section{margin-bottom:28px}
+.sidebar-title{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(–gold);margin-bottom:14px}
+.profile-card{background:var(–navy);padding:18px;text-align:center}
+.profile-farm{font-family:‘Playfair Display’,serif;font-size:15px;color:var(–white);margin-bottom:3px}
+.profile-sub{font-size:11px;color:rgba(255,255,255,.4);font-weight:300}
+.profile-vision{margin-top:12px;padding:12px;border:1px solid rgba(201,168,76,.15);font-size:12px;color:rgba(255,255,255,.55);font-style:italic;line-height:1.6;text-align:left}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);margin-top:12px}
+.profile-stat{background:var(–navy);padding:10px 6px;text-align:center}
+.stat-val{font-size:18px;font-weight:700;color:var(–gold);display:block}
+.stat-lbl{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase}
+.wisdom-item{padding:10px 0;border-bottom:1px solid rgba(27,43,75,.07);display:flex;gap:9px;align-items:flex-start}
+.wisdom-item:last-child{border-bottom:none}
+.wisdom-ico{font-size:14px;flex-shrink:0;margin-top:2px}
+.wisdom-text{font-size:12px;color:var(–navy);line-height:1.5;font-weight:300}
+.wisdom-farm{font-size:11px;color:var(–gray);margin-top:2px}
+.trending-item{padding:9px 0;border-bottom:1px solid rgba(27,43,75,.06);display:flex;justify-content:space-between;align-items:center}
+.trending-item:last-child{border-bottom:none}
+.trending-tag{font-size:12px;font-weight:600;color:var(–navy)}
+.trending-count{font-size:11px;color:var(–gray)}
+</style>
+
+</head>
+<body>
+
+<!-- LANDING -->
+
+<div id="screen-landing">
+  <div class="land-bg"></div>
+  <div class="grain"></div>
+  <div class="field-lines">
+    <svg viewBox="0 0 1200 300" preserveAspectRatio="none">
+      <defs><linearGradient id="fg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.7"/></linearGradient></defs>
+      <line x1="0" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="110" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="220" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="330" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="440" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="550" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="650" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="760" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="870" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="980" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="1090" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+      <line x1="1200" y1="300" x2="600" y2="60" stroke="url(#fg)" stroke-width="1"/>
+    </svg>
+  </div>
+  <nav class="land-nav">
+    <div class="logo">CORNER<span>STONE</span></div>
+    <button class="btn btn-outline" style="font-size:11px;padding:10px 22px" onclick="showScreen('trust')">Sign In</button>
+  </nav>
+  <div class="land-body">
+    <div class="eyebrow">American Land Sovereignty Infrastructure</div>
+    <h1 class="land-h1">Your farm has<br>a <em>story.</em></h1>
+    <p class="land-sub">We help you protect it. A community built by farmers, for farmers — where your legacy lives, grows, and endures.</p>
+    <div class="land-cta">
+      <button class="btn btn-gold" onclick="showScreen('trust')">Start Your Legacy <span style="font-size:16px">→</span></button>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+</div>
+
+<!-- ONBOARDING -->
+
+<div id="onboarding" class="hidden">
+
+  <!-- TRUST -->
+
+  <div id="screen-trust" style="min-height:100vh;background:var(--navy-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;position:relative">
+    <div class="grain"></div>
+    <div class="trust-wrap">
+      <div class="trust-icon">🛡️</div>
+      <h2 class="trust-h">Before we begin,<br>here's our promise.</h2>
+      <div class="trust-list">
+        <div class="trust-item"><div class="trust-check">✓</div><div class="trust-text"><strong>Your farm's story belongs to you.</strong> We never sell your data or share your information without your explicit permission.</div></div>
+        <div class="trust-item"><div class="trust-check">✓</div><div class="trust-text"><strong>You can take everything with you.</strong> Export your full legacy profile as a PDF or delete your account completely at any time.</div></div>
+        <div class="trust-item"><div class="trust-check">✓</div><div class="trust-text"><strong>No ads. No algorithms selling your attention.</strong> Cornerstone is free for farmers. We earn when marketplace transactions close — not from your data.</div></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%;justify-content:center" onclick="showScreen('intake1')">I'm ready to start →</button>
+    </div>
+  </div>
+
+  <!-- INTAKE 1 -->
+
+  <div id="screen-intake1" class="hidden" style="min-height:100vh;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px">
+    <div class="intake-wrap">
+      <div class="steps"><div class="step active"></div><div class="step"></div><div class="step"></div></div>
+      <p class="intake-hint" style="margin-bottom:6px">Question 1 of 3</p>
+      <h2 class="intake-q">What's your farm's name?</h2>
+      <p class="intake-hint">If it doesn't have an official name, what do you call it?</p>
+      <input class="field-input" id="farm-name" type="text" placeholder="e.g. Harlan Family Farm" autocomplete="off">
+      <button class="btn btn-navy" style="width:100%;justify-content:center" onclick="showScreen('intake2')">Continue →</button>
+    </div>
+  </div>
+
+  <!-- INTAKE 2 -->
+
+  <div id="screen-intake2" class="hidden" style="min-height:100vh;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px">
+    <div class="intake-wrap">
+      <div class="steps"><div class="step done"></div><div class="step active"></div><div class="step"></div></div>
+      <p class="intake-hint" style="margin-bottom:6px">Question 2 of 3</p>
+      <h2 class="intake-q">How long has it been in your family?</h2>
+      <p class="intake-hint">Approximate years is fine.</p>
+      <input class="field-input" id="farm-years" type="text" placeholder="e.g. 3 generations, since 1952, 40+ years" autocomplete="off">
+      <button class="btn btn-navy" style="width:100%;justify-content:center" onclick="showScreen('intake3')">Continue →</button>
+    </div>
+  </div>
+
+  <!-- INTAKE 3 -->
+
+  <div id="screen-intake3" class="hidden" style="min-height:100vh;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px">
+    <div class="intake-wrap">
+      <div class="steps"><div class="step done"></div><div class="step done"></div><div class="step active"></div></div>
+      <p class="intake-hint" style="margin-bottom:6px">Question 3 of 3</p>
+      <h2 class="intake-q">What brings you to Cornerstone?</h2>
+      <p class="intake-hint">This shapes what you see first.</p>
+      <div class="path-opts">
+        <div class="path-opt" onclick="selectPath(this)"><div class="path-ico">🌾</div><div class="path-title">I'm figuring out what happens to my farm when I'm gone</div></div>
+        <div class="path-opt" onclick="selectPath(this)"><div class="path-ico">🏠</div><div class="path-title">I inherited a farm and don't know where to start</div></div>
+        <div class="path-opt" onclick="selectPath(this)"><div class="path-ico">🤝</div><div class="path-title">I'm looking to connect with farmers like me</div></div>
+      </div>
+      <button class="btn btn-navy" id="path-btn" style="width:100%;justify-content:center;opacity:.35;pointer-events:none" onclick="showScreen('legacy')">Continue →</button>
+    </div>
+  </div>
+
+  <!-- LEGACY -->
+
+  <div id="screen-legacy" class="hidden" style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr">
+    <div class="leg-left">
+      <div class="grain"></div>
+      <div class="leg-left-content">
+        <div class="leg-left-icon">📜</div>
+        <h3 class="leg-left-h">This is the first page<br>of your legacy.</h3>
+        <p class="leg-left-sub">What you write here becomes the foundation of your farm's permanent record — something that outlasts any transaction, any document, any generation.</p>
+        <div class="leg-left-q">"I don't want to be the one who loses what my grandfather built. I want someone to know what this land meant to us."<br><br><span style="color:rgba(255,255,255,.3);font-size:11px;font-style:normal">— Farmer in Iowa, Cornerstone Beta</span></div>
+      </div>
+    </div>
+    <div class="leg-right">
+      <div class="steps" style="margin-bottom:28px"><div class="step done"></div><div class="step done"></div><div class="step done"></div></div>
+      <div class="leg-label">Your Legacy Profile</div>
+      <h2 class="leg-q">Tell us about your farm.</h2>
+      <p class="leg-sub">Just the basics. You can add your full story anytime.</p>
+      <div class="info-grid">
+        <div class="f-group full"><label class="f-lbl">Farm Name</label><input class="f-in" id="leg-name" type="text" placeholder="Pre-filled from your answer"></div>
+        <div class="f-group"><label class="f-lbl">County</label><input class="f-in" type="text" placeholder="e.g. Polk County"></div>
+        <div class="f-group"><label class="f-lbl">State</label><input class="f-in" type="text" placeholder="e.g. Iowa"></div>
+        <div class="f-group full"><label class="f-lbl">What do you want your farm's future to look like?</label><textarea class="f-in" placeholder="Take your time. There's no right answer — just yours."></textarea></div>
+      </div>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px" onclick="showScreen('feed')">Save to My Legacy →</button>
+    </div>
+  </div>
+
+</div><!-- /onboarding -->
+
+<!-- FEED -->
+
+<div id="screen-feed" class="hidden" style="display:none;min-height:100vh;flex-direction:column;background:var(--cream)">
+  <nav class="feed-nav">
+    <div class="logo">CORNER<span>STONE</span></div>
+    <div class="feed-nav-right">
+      <button class="nav-pill active">Feed</button>
+      <button class="nav-pill">My Legacy</button>
+      <button class="nav-pill">Collected Wisdom</button>
+      <div class="avatar">H</div>
+    </div>
+  </nav>
+  <div class="feed-body">
+    <div class="feed-main">
+      <div class="feed-welcome">
+        <div class="feed-welcome-icon">🌅</div>
+        <div class="feed-welcome-text">
+          <h3>Welcome to Cornerstone, <span id="welcome-name">Harlan Family Farm</span>.</h3>
+          <p>We found farmers who've been through what you're facing. Their stories are below.</p>
+        </div>
+      </div>
+      <div class="feed-tabs">
+        <button class="feed-tab active" onclick="setTab(this)">For You</button>
+        <button class="feed-tab" onclick="setTab(this)">Succession</button>
+        <button class="feed-tab" onclick="setTab(this)">Diversification</button>
+        <button class="feed-tab" onclick="setTab(this)">Young Farmers</button>
+        <button class="feed-tab" onclick="setTab(this)">All Posts</button>
+      </div>
+
+```
+  <div class="post-card">
+    <div class="post-header">
+      <div class="farm-badge">🌿</div>
+      <div class="post-meta"><div class="farm-name">Belle Meade Farms</div><div class="farm-details">Tennessee · 340 acres · 4 generations · Diversification</div></div>
+      <div class="post-tag">Succession</div>
+    </div>
+    <div class="post-body">
+      <div class="post-title">We almost sold to a developer. Here's what we did instead.</div>
+      <div class="post-text">Three years ago we got an offer we couldn't refuse — or so we thought. Developer wanted our bottom 80 acres for a subdivision. My dad said take it. I couldn't bring myself to. What followed was the hardest and best two years of our farm's life. We diversified into agritourism, got a young farmer to lease the back acreage on a rent-to-own structure, and last year we turned a profit for the first time in six years. I want to share exactly how we did it because nobody told us this was possible...</div>
+    </div>
+    <div class="post-footer">
+      <button class="post-action" onclick="savePost(this,'Belle Meade Farms','We almost sold to a developer...')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Save to Wisdom
+      </button>
+      <button class="post-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>14 replies</button>
+      <span style="font-size:11px;color:var(--gray);margin-left:auto">247 farmers saved this</span>
+    </div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-header">
+      <div class="farm-badge" style="background:#4A3728">🤠</div>
+      <div class="post-meta"><div class="farm-name">Price Family Ranch</div><div class="farm-details">Texas · 1,200 acres · 3 generations · Cattle & Row Crop</div></div>
+      <div class="post-tag">Succession</div>
+    </div>
+    <div class="post-body">
+      <div class="post-title">My dad wanted to sell. I came home from finance to save it. Here's year one.</div>
+      <div class="post-text">I spent six years on Wall Street telling myself I'd go back eventually. When my dad called last spring and said he'd accepted an offer from a land fund, I drove 18 hours straight. We pulled out of the deal, but we had no plan. What I've learned in the last 14 months about farm finance, succession structures, and what institutional buyers don't want you to know — I'm laying it all out here...</div>
+    </div>
+    <div class="post-footer">
+      <button class="post-action" onclick="savePost(this,'Price Family Ranch','My dad wanted to sell...')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Save to Wisdom
+      </button>
+      <button class="post-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>31 replies</button>
+      <span style="font-size:11px;color:var(--gray);margin-left:auto">189 farmers saved this</span>
+    </div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-header">
+      <div class="farm-badge" style="background:#2D4A3E">🌽</div>
+      <div class="post-meta"><div class="farm-name">Kowalski Grain Farm</div><div class="farm-details">Nebraska · 680 acres · 2 generations · Corn & Soy</div></div>
+      <div class="post-tag">Young Farmers</div>
+    </div>
+    <div class="post-body">
+      <div class="post-title">Found a successor through this community. He starts in March.</div>
+      <div class="post-text">I put up a post six weeks ago saying I was 67, no kids interested in the farm, and I didn't know what came next. Forty-two people responded. One of them was a 28-year-old from Kansas who's been farming someone else's land for five years and saving everything he earns. We've been talking every week since. I think he's the one. Here's how we structured the conversation and what we're working on legally...</div>
+    </div>
+    <div class="post-footer">
+      <button class="post-action" onclick="savePost(this,'Kowalski Grain Farm','Found a successor through this community...')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Save to Wisdom
+      </button>
+      <button class="post-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>58 replies</button>
+      <span style="font-size:11px;color:var(--gray);margin-left:auto">312 farmers saved this</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- SIDEBAR -->
+<div class="feed-sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-title">Your Legacy</div>
+    <div class="profile-card">
+      <div style="font-size:26px;margin-bottom:6px">🌾</div>
+      <div class="profile-farm" id="sidebar-farm-name">Harlan Family Farm</div>
+      <div class="profile-sub">Iowa · 480 acres · Est. 1952</div>
+      <div class="profile-vision">"I want my grandchildren to know this land even if they never farm it."</div>
+      <div class="profile-stats">
+        <div class="profile-stat"><span class="stat-val">1</span><span class="stat-lbl">Legacy Entry</span></div>
+        <div class="profile-stat"><span class="stat-val" id="wisdom-count">0</span><span class="stat-lbl">Saved</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Collected Wisdom</div>
+    <div id="wisdom-list"><div style="font-size:12px;color:var(--gray);font-weight:300;line-height:1.65">Posts you save will appear here — building your personal library of farm knowledge.</div></div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Trending Topics</div>
+    <div class="trending-item"><span class="trending-tag">#Succession</span><span class="trending-count">847 posts</span></div>
+    <div class="trending-item"><span class="trending-tag">#YoungFarmers</span><span class="trending-count">612 posts</span></div>
+    <div class="trending-item"><span class="trending-tag">#Diversification</span><span class="trending-count">490 posts</span></div>
+    <div class="trending-item"><span class="trending-tag">#LandRights</span><span class="trending-count">378 posts</span></div>
+    <div class="trending-item"><span class="trending-tag">#FarmClause</span><span class="trending-count">201 posts</span></div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<div class="save-toast" id="toast">✦ Added to your Collected Wisdom</div>
+
+<script>
+let savedCount = 0;
+
+function showScreen(name) {
+  document.getElementById('screen-landing').style.display = 'none';
+  document.getElementById('onboarding').classList.add('hidden');
+  document.getElementById('screen-feed').style.display = 'none';
+  document.getElementById('screen-feed').classList.add('hidden');
+
+  const intakeIds = ['screen-trust','screen-intake1','screen-intake2','screen-intake3','screen-legacy'];
+
+  if (name === 'trust') {
+    document.getElementById('onboarding').classList.remove('hidden');
+    intakeIds.forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.style.display='none'; });
+    const t = document.getElementById('screen-trust');
+    t.classList.remove('hidden'); t.style.display='flex';
+  } else if (['intake1','intake2','intake3'].includes(name)) {
+    document.getElementById('onboarding').classList.remove('hidden');
+    intakeIds.forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.style.display='none'; });
+    const el = document.getElementById('screen-' + name);
+    el.classList.remove('hidden'); el.style.display='flex';
+  } else if (name === 'legacy') {
+    document.getElementById('onboarding').classList.remove('hidden');
+    intakeIds.forEach(id => { const el = document.getElementById(id); el.classList.add('hidden'); el.style.display='none'; });
+    const fn = document.getElementById('farm-name');
+    if (fn && fn.value) { const ln = document.getElementById('leg-name'); if(ln) ln.value = fn.value; }
+    const leg = document.getElementById('screen-legacy');
+    leg.classList.remove('hidden'); leg.style.display='grid';
+  } else if (name === 'feed') {
+    const fn = document.getElementById('farm-name');
+    if (fn && fn.value) {
+      const wn = document.getElementById('welcome-name');
+      const sfn = document.getElementById('sidebar-farm-name');
+      if (wn) wn.textContent = fn.value;
+      if (sfn) sfn.textContent = fn.value;
+    }
+    const feed = document.getElementById('screen-feed');
+    feed.classList.remove('hidden'); feed.style.display='flex';
+  }
+}
+
+function selectPath(el) {
+  document.querySelectorAll('.path-opt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  const btn = document.getElementById('path-btn');
+  btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+}
+
+function setTab(el) {
+  document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function savePost(btn, farmName, title) {
+  if (btn.classList.contains('saved')) return;
+  btn.classList.add('saved');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Saved';
+  savedCount++;
+  document.getElementById('wisdom-count').textContent = savedCount;
+  const wl = document.getElementById('wisdom-list');
+  if (savedCount === 1) wl.innerHTML = '';
+  const item = document.createElement('div');
+  item.className = 'wisdom-item';
+  item.innerHTML = '<div class="wisdom-ico">📌</div><div><div class="wisdom-text">' + title.slice(0,52) + '...</div><div class="wisdom-farm">' + farmName + '</div></div>';
+  wl.appendChild(item);
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+document.getElementById('screen-landing').style.display = 'flex';
+</script>
+
+</body>
+</html>
